@@ -302,6 +302,18 @@ with DAG(
     shaped = transform(raw)
     loaded = load(cfg, shaped)
 
+      # 1) Trigger the dbt DAG AFTER ETL
+    trigger_dbt = TriggerDagRunOperator(
+        task_id="trigger_dbt_after_etl",
+        trigger_dag_id="BuildELT_Stock_Forecast_dbt",   # <-- must match DAG id in build_elt_with_dbt.py
+        wait_for_completion=True,
+        allowed_states=[DagRunState.SUCCESS],
+        failed_states=[DagRunState.FAILED],
+        reset_dag_run=True,
+        poke_interval=60,
+        trigger_rule=TriggerRule.ALL_SUCCESS,
+    )
+
     trigger_train_forecast = TriggerDagRunOperator(
         task_id="trigger_train_forecast",
         trigger_dag_id="snowflake_train_and_forecast_parallel",
@@ -313,4 +325,4 @@ with DAG(
         trigger_rule=TriggerRule.ALL_SUCCESS,
     )
 
-    loaded >> trigger_train_forecast
+    loaded >> trigger_dbt >> trigger_train_forecast

@@ -1,0 +1,19 @@
+version: 2
+
+sources:
+  - name: raw
+    database: USER_DB_LEMMING  
+    schema: RAW
+    description: "Raw stock price data from yfinance ETL"
+    tables:
+      - name: AAPL
+        identifier: AAPL
+        description: "Apple stock OHLCV data"
+      - name: NVDA
+        identifier: NVDA
+        description: "NVIDIA stock OHLCV data"
+  
+  - name: analytics
+    database: USER_DB_LEMMING  
+    schema: ANALYTICS
+    description: "Analytics schema for forecasts and models"

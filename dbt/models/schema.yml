@@ -1,0 +1,27 @@
+version: 2
+
+models:
+  - name: stock_summary
+    description: "Combined stock price data for AAPL and NVDA"
+    columns:
+      - name: SYMBOL
+        description: "Stock ticker symbol"
+        data_tests:
+          - not_null
+          - accepted_values:
+              values: ['AAPL', 'NVDA']
+      
+      - name: DT
+        description: "Trading date"
+        data_tests:
+          - not_null
+      
+      - name: CLOSE
+        description: "Closing price"
+        data_tests:
+          - not_null
+      
+      - name: VOLUME
+        description: "Trading volume"
+        data_tests:
+          - not_null

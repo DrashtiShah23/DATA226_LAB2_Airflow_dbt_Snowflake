@@ -6,9 +6,9 @@ from airflow.hooks.base import BaseHook
 DBT_PROJECT_DIR = "/opt/airflow/dbt"
 
 with DAG(
-    "BuildELT_dbt",
+    "BuildELT_Stock_Forecast_dbt",
     start_date=datetime(2025, 3, 19),
-    description="A sample Airflow DAG to invoke dbt runs using a BashOperator",
+    description="dbt ELT for stock forecast analytics",
     schedule=None,
     catchup=False,
 ) as dag:
